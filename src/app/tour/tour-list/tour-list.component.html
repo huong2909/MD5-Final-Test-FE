@@ -1,0 +1,19 @@
+<a routerLink="/tour/create">Thêm sinh viên</a>
+<table border="1px">
+  <tr>
+    <td>STT</td>
+    <td>Title</td>
+    <td>Price</td>
+    <td>Action</td>
+  </tr>
+  <tr *ngFor="let tour of listTour; index as i">
+    <td>{{i + 1}}</td>
+    <td><a [routerLink]="['detail',tour.id]">{{tour.title}}</a></td>
+    <td>{{tour.price}}</td>
+    <td>
+      <button [routerLink]="['edit',tour.id]">Edit</button>
+      <button [routerLink]="['delete',tour.id]">Delete</button>
+    </td>
+<!--    <td><button (click)="delete(tour.id)">Delete</button></td>-->
+  </tr>
+</table>

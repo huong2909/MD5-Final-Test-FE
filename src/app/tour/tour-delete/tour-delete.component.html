@@ -1,0 +1,21 @@
+<h1>Xoá danh mục sản phẩm</h1>
+<form [formGroup]="tourForm" (ngSubmit)="delete(id)">
+  <table>
+    <tr>
+      <td>Tên: </td>
+      <td><input type="text" formControlName="title"></td>
+    </tr>
+    <tr>
+      <td>Điểm: </td>
+      <td><input type="text" formControlName="price"></td>
+    </tr>
+    <tr>
+      <td>Tuổi: </td>
+      <td><input type="text" formControlName="description"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button>Xoá</button></td>
+    </tr>
+  </table>
+</form>

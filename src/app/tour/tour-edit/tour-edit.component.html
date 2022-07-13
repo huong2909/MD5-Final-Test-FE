@@ -1,0 +1,26 @@
+<h1>Tạo danh bài viết</h1>
+<form [formGroup]="tourForm" (ngSubmit)="update(id)">
+  <table>
+    <tr>
+      <td>Title</td>
+      <td><input type="text" formControlName="title"></td>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td><input type="text" formControlName="price"></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td><textarea type="text" formControlName="description"></textarea></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td>
+        <button>Cập nhật</button>
+      </td>
+    </tr>
+  </table>
+</form>
+
+
