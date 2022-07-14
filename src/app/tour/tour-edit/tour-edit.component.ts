@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {TourService} from "../../service/tour.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-tour-edit',
@@ -10,36 +10,36 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./tour-edit.component.css']
 })
 export class TourEditComponent implements OnInit {
-  id: any;
-  tourForm: FormGroup = new FormGroup({
-    title: new FormControl(),
-    price: new FormControl(),
-    description: new FormControl(),
-  });
+  tourForm!: FormGroup;
+
   constructor(private tourService: TourService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      // @ts-ignore
-      this.id = +paramMap.get('id');
-      this.getTour(this.id);
-    });
+              private router: Router,
+              private fb: FormBuilder) {
+
   }
 
   ngOnInit(): void {
-  }
-  getTour(id: number) {
-    return this.tourService.getById(id).subscribe(tour => {
-      this.tourForm = new FormGroup({
-        title: new FormControl(tour.title),
-        price: new FormControl(tour.price),
-        description: new FormControl(tour.description),
-      });
+    this.tourForm = this.fb.group({
+      id: [''],
+      title: ['', Validators.required],
+      price: ['', Validators.required],
+      description: [''],
+    });
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = Number(paramMap.get('id'));
+      this.getTour(id);
     });
   }
-  update(id: number) {
-    const tour = this.tourForm.value;
-    this.tourService.update(id, tour).subscribe(() => {
+
+  getTour(id: number) {
+    return this.tourService.getById(id).subscribe(tour => {
+      this.tourForm.patchValue(tour);
+    });
+  }
+
+  update() {
+    this.tourService.update(this.tourForm.get('id')?.value, this.tourForm.value).subscribe(() => {
       this.router.navigate(['/tour']);
       alert('Cập nhật thành công');
     }, e => {
